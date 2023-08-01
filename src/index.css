@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: "white";
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #bfaee0;
+}
+
+/* Handle on Hover */
+::-webkit-scrollbar-track:hover {
+  background: #eef2f6;
+}
+.ql-editor {
+  min-height: 200px;
+  background-color: #f6f7f8;
+}
