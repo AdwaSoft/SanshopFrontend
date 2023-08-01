@@ -7,6 +7,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "state/store";
+import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
