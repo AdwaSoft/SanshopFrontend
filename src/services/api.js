@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const shopApi = createApi({
   reducerPath: "shopApi",
   tagTypes: ["Product"],
-  baseQuery: fetchBaseQuery({ baseUrl: "https://sanshop-api.render.com" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://sanshop-api.onrender.com" }),
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: () => "/managment/products",
