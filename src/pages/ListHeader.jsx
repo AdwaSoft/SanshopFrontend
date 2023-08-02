@@ -64,9 +64,11 @@ const ListHeader = ({ title, route, role, owner }) => {
       )}
       {role !== "create" && !nonMobile && (
         <Fab
+          LinkComponent={Link}
+          to="/managment/productscreate"
           sx={{
             mt: { xs: "10px", sm: "" },
-            ml: { xs: "40px", sm: "" },
+            ml: { xs: "20px", sm: "" },
             color: `${theme.palette.background[500]}`,
             backgroundColor: `${theme.palette.primary[300]}`,
             "&:hover": {

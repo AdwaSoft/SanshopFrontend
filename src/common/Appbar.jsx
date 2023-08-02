@@ -72,7 +72,14 @@ const Appbar = ({ drawerCollapsed, setDrawerCollapsed }) => {
         }}
       >
         <Toolbar>
-          <img src={logo} width="65px" height="auto" marginleft="0px" />
+          <Box
+            sx={{
+              display: { xs: "none", sm: "block" },
+            }}
+          >
+            <img src={logo} width="65px" height="auto" marginleft="0px" />
+          </Box>
+
           {nonMobile && (
             <Typography
               variant="h5"

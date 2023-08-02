@@ -540,7 +540,7 @@ const ProductDetail = () => {
               // border: "1px solid red",
             },
             "& .thumbnails img": {
-              height: "70px",
+              height: "65px",
 
               borderRadius: "14px",
               // border: "1px solid red",
@@ -564,7 +564,7 @@ const ProductDetail = () => {
             slideBackgroundColor="darkgrey"
             slideImageFit="cover"
             thumbnails={true}
-            thumbnailWidth="80px"
+            thumbnailWidth="70px"
             style={{
               textAlign: "center",
               // maxWidth: "450px",
@@ -621,7 +621,7 @@ const ProductDetail = () => {
                   mb: 2,
                 }}
               >
-                {`${prod?.regularPrice} birr`}
+                {`$${prod?.regularPrice} `}
               </Typography>
               <Divider />
               <Typography
