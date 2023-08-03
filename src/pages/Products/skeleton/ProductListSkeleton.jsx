@@ -18,7 +18,6 @@ const ProductListSkeleton = () => {
 
         <Skeleton variant="rounded" width={200} height={60} />
         <Skeleton variant="rounded" width={200} height={60} />
-        <Skeleton variant="rounded" width={480} height={60} />
       </Box>
       <Box display="flex" justifyContent="space-between" p={2}>
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
@@ -27,15 +26,11 @@ const ProductListSkeleton = () => {
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
       </Box>
       <Box display="flex" justifyContent="space-between" p={1} ml={3} mr={1}>
         <Skeleton variant="rounded" width={65} height={60} />
         <Skeleton variant="text" width={120} />
         <Skeleton variant="text" width={120} sx={{ fontSize: "10px" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
@@ -47,15 +42,11 @@ const ProductListSkeleton = () => {
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
       </Box>
       <Box display="flex" justifyContent="space-between" p={1} ml={3} mr={1}>
         <Skeleton variant="rounded" width={65} height={60} />
         <Skeleton variant="text" width={120} />
         <Skeleton variant="text" width={120} sx={{ fontSize: "10px" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
@@ -67,15 +58,11 @@ const ProductListSkeleton = () => {
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
       </Box>
       <Box display="flex" justifyContent="space-between" p={1} ml={3} mr={1}>
         <Skeleton variant="rounded" width={65} height={60} />
         <Skeleton variant="text" width={120} />
         <Skeleton variant="text" width={120} sx={{ fontSize: "10px" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
         <Skeleton variant="text" width={90} sx={{ fontSize: "1rem" }} />
