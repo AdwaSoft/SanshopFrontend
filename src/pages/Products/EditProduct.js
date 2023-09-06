@@ -1310,7 +1310,7 @@ const EditProduct = () => {
           vertical: "bottom",
           horizontal: "center",
         }}
-        sx={{ width: "300px" }}
+        sx={{ width: "400px" }}
       >
         <Alert
           sx={{

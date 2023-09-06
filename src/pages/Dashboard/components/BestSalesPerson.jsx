@@ -3,7 +3,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import React from "react";
 import { useTheme } from "@mui/material/styles";
 import { bestSales } from "assets/chartdata";
-
 function CustomToolbar() {
   const theme = useTheme();
   return (

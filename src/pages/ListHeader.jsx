@@ -79,10 +79,11 @@ const ListHeader = ({ title, route, role, owner }) => {
       )}
       {role !== "create" && owner !== "User" && !nonMobile && (
         <Fab
-          size="small"
+          LinkComponent={Link}
+          to="/dashboard/product/productscreate"
           sx={{
-            position: "absolute",
-            left: "50%",
+            position: "fixed",
+            left: "47%",
             bottom: "10px",
             // mt: { xs: "20px", sm: "" },
             // ml: { xs: "70px", sm: "" },
