@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { shopApi } from "./api";
 
-export const shopApi = createApi({
-  reducerPath: "shopApi",
+export const productApiSlice = shopApi.injectEndpoints({
   tagTypes: ["Product"],
-  baseQuery: fetchBaseQuery({ baseUrl: "https://sanshop-api.onrender.com" }),
+
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: () => "/managment/products",
+      query: () => "/product/products",
       providesTags: (result) =>
         result
           ? [
@@ -16,12 +16,12 @@ export const shopApi = createApi({
           : [{ type: "Product", id: "LIST" }],
     }),
     getProduct: builder.query({
-      query: (productId) => `/managment/products/${productId}`,
+      query: (productId) => `/product/products/${productId}`,
       providesTags: (result, error, id) => [{ type: "Product", id }],
     }),
     addNewProduct: builder.mutation({
       query: (initialProduct) => ({
-        url: "/managment/productscreate",
+        url: "/product/productscreate",
         method: "POST",
         body: initialProduct,
       }),
@@ -29,7 +29,7 @@ export const shopApi = createApi({
     }),
     updateProduct: builder.mutation({
       query: ({ id, ...product }) => ({
-        url: `/managment/products/${id}`,
+        url: `/product/products/${id}`,
         method: "PUT",
         body: product,
       }),
@@ -39,7 +39,7 @@ export const shopApi = createApi({
     }),
     deleteProduct: builder.mutation({
       query: ({ id }) => ({
-        url: `/managment/products`,
+        url: `/product/products`,
         method: "DELETE",
         body: { id },
       }),
@@ -57,4 +57,4 @@ export const {
   useGetProductQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,
-} = shopApi;
+} = productApiSlice;

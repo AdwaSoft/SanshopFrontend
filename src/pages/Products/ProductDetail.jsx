@@ -31,7 +31,7 @@ import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 
 import { product } from "assets/data";
-import { useGetProductsQuery } from "services/api";
+import { useGetProductsQuery } from "rtkQuery/productApiSlice";
 import ProductDetailSkeleton from "./skeleton/ProductDetailSkeleton";
 
 const PublishLightTooltip = styled(({ className, ...props }) => (
@@ -456,7 +456,7 @@ const ProductDetail = () => {
         <Box flexGrow={1}>
           <Button
             LinkComponent={Link}
-            to="/managment/products"
+            to="/dashboard/product/products"
             sx={{
               // flexGrow: 1,
               textTransform: "capitalize",
@@ -469,7 +469,10 @@ const ProductDetail = () => {
             Back
           </Button>
         </Box>
-        <IconButton LinkComponent={Link} to={`/managment/products/${id}`}>
+        <IconButton
+          LinkComponent={Link}
+          to={`/dashboard/product/products/${id}`}
+        >
           <EditIcon />
         </IconButton>
         <CssBaseline />
@@ -535,7 +538,7 @@ const ProductDetail = () => {
             pl: { xs: 2, sm: 5 },
             mb: 7,
             "& .thumbnails ": {
-              height: "90px",
+              height: "70px",
               // borderRadius: "20px",
               // border: "1px solid red",
             },
@@ -552,10 +555,10 @@ const ProductDetail = () => {
             // time={2000}
             width="650px"
             height="600px"
-            captionStyle={captionStyle}
+            // captionStyle={captionStyle}
             radius="15px"
-            slideNumber={true}
-            slideNumberStyle={slideNumberStyle}
+            // slideNumber={true}
+            // slideNumberStyle={slideNumberStyle}
             // captionPosition="bottom"
             // automatic={true}
             // dots={true}
@@ -564,189 +567,189 @@ const ProductDetail = () => {
             slideBackgroundColor="darkgrey"
             slideImageFit="cover"
             thumbnails={true}
-            thumbnailWidth="70px"
-            style={{
-              textAlign: "center",
-              // maxWidth: "450px",
-              // maxHeight: "500px",
-              // margin: "40px 0 auto 20px",
-            }}
+            thumbnailWidth="65px"
+            style={
+              {
+                // textAlign: "center",
+                // maxWidth: "650px",
+                // maxHeight: "600px",
+                // margin: "40px 0 auto 20px",
+              }
+            }
           />
         </Grid>
 
         {/* formBox */}
         <Grid item sm={6} md={6} xs={10} id="form">
-          {product.map((item, index) => (
-            <Box
-              key={index}
+          <Box
+            key={prod._id}
+            sx={{
+              p: 3,
+              m: 3,
+            }}
+          >
+            <Typography
               sx={{
-                p: 3,
-                m: 3,
+                mt: 3,
+                color: `${theme.palette.primary[600]}`,
+                fontWeight: 900,
               }}
             >
-              <Typography
-                sx={{
-                  mt: 3,
-                  color: `${theme.palette.primary[600]}`,
-                  fontWeight: 900,
-                }}
-              >
-                {prod?.amount >= 1 ? "In Stock" : "Out Of Stock"}
-              </Typography>
+              {prod?.amount >= 1 ? "In Stock" : "Out Of Stock"}
+            </Typography>
 
-              <Typography
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  color: `${theme.palette.text[600]}`,
-                  fontWeight: 900,
-                }}
-              >
-                {prod?.brand}
-              </Typography>
+            <Typography
+              sx={{
+                mt: 3,
+                mb: 2,
+                color: `${theme.palette.text[600]}`,
+                fontWeight: 900,
+              }}
+            >
+              {prod?.brand}
+            </Typography>
 
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 900,
-                }}
-              >
-                {prod?.name}
-              </Typography>
-              <Typography
-                sx={{
-                  mt: 3,
-                  fontWeight: 900,
-                  fontSize: "16px",
-                  mb: 2,
-                }}
-              >
-                {`$${prod?.regularPrice} `}
-              </Typography>
-              <Divider />
-              <Typography
-                sx={{
-                  mt: 3,
-                }}
-              >
-                {prod?.description}
-              </Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 900,
+              }}
+            >
+              {prod?.name}
+            </Typography>
+            <Typography
+              sx={{
+                mt: 3,
+                fontWeight: 900,
+                fontSize: "16px",
+                mb: 2,
+              }}
+            >
+              {`${prod?.regularPrice} birr`}
+            </Typography>
+            <Divider />
+            <Typography
+              sx={{
+                mt: 3,
+              }}
+            >
+              {prod?.description}
+            </Typography>
 
-              <Grid
-                item
-                direction="row"
-                container
-                gap={2}
-                sx={{
-                  mt: { xs: 4, sm: 3 },
-                  mb: { xs: 4, sm: 3 },
-                }}
-              >
-                <Grid item xs={2} sm={2} md={2}>
-                  <Typography
-                    sx={{
-                      fontWeight: 900,
-                    }}
-                  >
-                    Colors
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  xs={9}
-                  sm={9}
-                  md={9}
-                  container
-                  gap={2}
-                  direction="row"
-                  sx={{
-                    // m: { xs: 4, sm: 3 },
-                    // display: "flex",
-                    // justifyContent: "space-around",
-                    alignItems: "center",
-                  }}
-                >
-                  {prod?.colors.map((color, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        marginRight: "10px",
-                        border: ` 1px solid ${theme.palette.primary[500]}`,
-                        width: "20px",
-                        height: "20px",
-                        borderRadius: "100%",
-                        backgroundColor: `${color}`,
-                      }}
-                    />
-                  ))}
-                </Grid>
-              </Grid>
-              <Grid
-                item
-                direction="row"
-                container
-                xs={12}
-                sx={{
-                  mt: { xs: 4, sm: 3 },
-                  mb: { xs: 4, sm: 3 },
-                }}
-              >
-                <Grid item xs={2} sm={2} md={2}>
-                  <Typography
-                    sx={{
-                      fontWeight: 900,
-                    }}
-                  >
-                    Sizes
-                  </Typography>
-                </Grid>
-
-                <Grid
-                  item
-                  xs={10}
-                  sm={9}
-                  md={9}
-                  gap={2}
-                  container
-                  direction="row"
-                  sx={{
-                    alignItems: "center",
-                  }}
-                >
-                  {prod?.sizes.map((size, index) => (
-                    <Chip
-                      key={index}
-                      sx={{
-                        fontWeight: 900,
-                        color: `${theme.palette.primary[500]}`,
-                      }}
-                      size="small"
-                      label={size}
-                      variant="outllined"
-                    />
-                  ))}
-                </Grid>
-              </Grid>
-              <Box display="flex" justifyContent="space-between">
+            <Grid
+              item
+              direction="row"
+              container
+              gap={2}
+              sx={{
+                mt: { xs: 4, sm: 3 },
+                mb: { xs: 4, sm: 3 },
+              }}
+            >
+              <Grid item xs={2} sm={2} md={2}>
                 <Typography
                   sx={{
-                    mt: 3,
                     fontWeight: 900,
                   }}
                 >
-                  Quantity remaining
+                  Colors
                 </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={9}
+                sm={9}
+                md={9}
+                container
+                gap={2}
+                direction="row"
+                sx={{
+                  // m: { xs: 4, sm: 3 },
+                  // display: "flex",
+                  // justifyContent: "space-around",
+                  alignItems: "center",
+                }}
+              >
+                {prod?.colors.map((color, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      marginRight: "10px",
+                      border: ` 1px solid ${theme.palette.primary[500]}`,
+                      width: "20px",
+                      height: "20px",
+                      borderRadius: "100%",
+                      backgroundColor: `${color}`,
+                    }}
+                  />
+                ))}
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              direction="row"
+              container
+              xs={12}
+              sx={{
+                mt: { xs: 4, sm: 3 },
+                mb: { xs: 4, sm: 3 },
+              }}
+            >
+              <Grid item xs={2} sm={2} md={2}>
                 <Typography
                   sx={{
-                    mt: 3,
-                    mr: { xs: 4, sm: 6 },
+                    fontWeight: 900,
                   }}
                 >
-                  {prod?.amount}
+                  Sizes
                 </Typography>
-              </Box>
+              </Grid>
+
+              <Grid
+                item
+                xs={10}
+                sm={9}
+                md={9}
+                gap={2}
+                container
+                direction="row"
+                sx={{
+                  alignItems: "center",
+                }}
+              >
+                {prod?.sizes.map((size, index) => (
+                  <Chip
+                    key={index}
+                    sx={{
+                      fontWeight: 900,
+                      color: `${theme.palette.primary[500]}`,
+                    }}
+                    size="small"
+                    label={size}
+                    variant="outllined"
+                  />
+                ))}
+              </Grid>
+            </Grid>
+            <Box display="flex" justifyContent="space-between">
+              <Typography
+                sx={{
+                  mt: 3,
+                  fontWeight: 900,
+                }}
+              >
+                Quantity remaining
+              </Typography>
+              <Typography
+                sx={{
+                  mt: 3,
+                  mr: { xs: 4, sm: 6 },
+                }}
+              >
+                {prod?.amount}
+              </Typography>
             </Box>
-          ))}
+          </Box>
         </Grid>
       </Grid>
 

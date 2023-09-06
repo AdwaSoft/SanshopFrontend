@@ -1,4 +1,4 @@
-import { useAddNewProductMutation } from "services/api";
+import { useAddNewProductMutation } from "rtkQuery/productApiSlice";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -22,6 +22,8 @@ import {
   FormControlLabel,
   Divider,
   Switch,
+  Snackbar,
+  Alert,
   // Button,
 } from "@mui/material";
 ///////////////Image drop import /////////////
@@ -136,6 +138,14 @@ const ProductCreate = () => {
 
   const [addNewProduct, { isLoading, isSuccess, isError, error }] =
     useAddNewProductMutation();
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleSnackbarOpen = () => {
+    setOpenSnackbar(true);
+  };
+  const handleClose = () => {
+    setOpenSnackbar(false);
+  };
 
   const navigate = useNavigate();
 
@@ -238,8 +248,8 @@ const ProductCreate = () => {
 
   var myCropWidget = cloudinary.createUploadWidget(
     {
-      cloudName: "djznkldpb",
-      uploadPreset: "san_shop_version_one",
+      cloudName: process.env.REACT_APP_CLOUD_NAME,
+      uploadPreset: process.env.REACT_APP_UPLOAD_PRESETS,
       folder: "product_images",
       // tags: "products",
       // publicId: "upload_product_image",
@@ -286,8 +296,8 @@ const ProductCreate = () => {
       setIsTaxIncludedInPrice(true);
       setTax(0);
       setChecked(false);
-
-      navigate("/managment/products");
+      setOpenSnackbar(false);
+      navigate("/dashboard/product/products");
     }
   }, [isSuccess, navigate]);
 
@@ -509,21 +519,53 @@ const ProductCreate = () => {
                         id={image}
                         sx={{
                           border: "1px solid red",
-                          borderRadius: "10px",
+                          borderRadius: "15px",
                           border: `1px solid ${theme.palette.text[100]}`,
                           width: "90px",
                           height: "90px",
                           p: "3px",
                         }}
                         item
-                        key={index}
+                        key={index + 1}
                       >
                         <img
-                          width="100%"
-                          height="100%"
+                          width="99%"
+                          height="99%"
                           alt={image}
                           src={image}
+                          style={{
+                            borderRadius: "15px",
+                          }}
                         />
+                        <IconButton
+                          sx={{
+                            backgroundColor: `${theme.palette.primary[500]}`,
+                            width: "17px",
+                            height: "17px",
+                            borderRadius: "4px",
+                            "&:hover": {
+                              backgroundColor: `${theme.palette.primary[100]}`,
+                            },
+                            position: "absolute",
+                            top: "1px",
+                            right: "1px",
+                          }}
+                          onClick={() =>
+                            setImages(() => {
+                              return images.filter((item) => item !== image);
+                            })
+                          }
+                          size="small"
+                        >
+                          <CloseOutlinedIcon
+                            sx={{
+                              color: `${theme.palette.white[500]}`,
+                              "&:hover": {
+                                color: `${theme.palette.text[500]}`,
+                              },
+                            }}
+                          />
+                        </IconButton>
                       </Grid>
                     ))}
                   </Grid>
@@ -1105,7 +1147,8 @@ const ProductCreate = () => {
               />
             </FormGroup>
             <Button
-              onClick={handleFormSubmit}
+              onClick={(handleFormSubmit, handleSnackbarOpen)}
+              type="submit"
               disabled={!canSubmit}
               sx={{
                 size: { xs: "small", sm: "large", md: "large" },
@@ -1121,6 +1164,24 @@ const ProductCreate = () => {
           </Box>
         </Box>
       </form>
+      <Snackbar
+        open={openSnackbar}
+        // autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        sx={{ width: "300px" }}
+      >
+        <Alert
+          sx={{
+            backgroundColor: `${theme.palette.primary[100]}`,
+          }}
+        >
+          Creating Product ...
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

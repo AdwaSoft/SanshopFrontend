@@ -95,7 +95,7 @@ export default function CustomToolBar({
       justifyContent="space-between"
     >
       {CustomToolbar()}
-      <FormControl sx={{ m: 1, width: 200 }}>
+      {/* <FormControl sx={{ m: 1, width: 200 }}>
         <InputLabel id="multiple-checkbox">Stock</InputLabel>
         <Select
           labelId="multiple-checkbox"
@@ -114,11 +114,11 @@ export default function CustomToolBar({
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
+      </FormControl> */}
 
       {/* Published */}
 
-      <FormControl sx={{ m: 1, width: 200 }}>
+      {/* <FormControl sx={{ m: 1, width: 200 }}>
         <InputLabel id="multiple-checkbox">Publish</InputLabel>
         <Select
           labelId="multiple-checkbox"
@@ -137,12 +137,12 @@ export default function CustomToolBar({
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
+      </FormControl> */}
 
       {/* search */}
 
       <Box flexGrow={1}>
-        <TextField
+        {/* <TextField
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -168,7 +168,7 @@ export default function CustomToolBar({
             setSearch(searchInput);
           }}
           value={searchInput}
-        ></TextField>
+        ></TextField> */}
       </Box>
     </Box>
   );

@@ -28,27 +28,42 @@ const ListHeader = ({ title, route, role, owner }) => {
         <Box id="bredcrum">
           <Breadcrumbs>
             <Typography>{route}</Typography>
-            <Link
-              sx={{
-                textDecoration: "none",
-                cursor: "pointer",
-              }}
-              // color={`${theme.palette.text[500]}`}
-              underline="hover"
-              to="/managment/products"
-            >
-              {owner}
-            </Link>
+            {owner === "User" && (
+              <Link
+                sx={{
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+                // color={`${theme.palette.text[500]}`}
+                underline="hover"
+                to="/dashboard/user/users"
+              >
+                {owner}
+              </Link>
+            )}
+            {owner === "Product" && (
+              <Link
+                sx={{
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+                // color={`${theme.palette.text[500]}`}
+                underline="hover"
+                to="/dashboard/product/products"
+              >
+                {owner}
+              </Link>
+            )}
             {role === "list" && <Typography>Lists</Typography>}
             {role === "create" && <Typography>{`New ${owner}`}</Typography>}
             {role === "edit" && <Typography>{`Edit ${owner}`}</Typography>}
           </Breadcrumbs>
         </Box>
       </Box>
-      {role !== "create" && nonMobile && (
+      {role !== "create" && owner !== "User" && nonMobile && (
         <Button
           LinkComponent={Link}
-          to="/managment/productscreate"
+          to="/dashboard/product/productscreate"
           sx={{
             size: { xs: "small", sm: "large" },
             color: `${theme.palette.white[500]}`,
@@ -62,13 +77,15 @@ const ListHeader = ({ title, route, role, owner }) => {
           {` New ${owner} `}
         </Button>
       )}
-      {role !== "create" && !nonMobile && (
+      {role !== "create" && owner !== "User" && !nonMobile && (
         <Fab
-          LinkComponent={Link}
-          to="/managment/productscreate"
+          size="small"
           sx={{
-            mt: { xs: "10px", sm: "" },
-            ml: { xs: "20px", sm: "" },
+            position: "absolute",
+            left: "50%",
+            bottom: "10px",
+            // mt: { xs: "20px", sm: "" },
+            // ml: { xs: "70px", sm: "" },
             color: `${theme.palette.background[500]}`,
             backgroundColor: `${theme.palette.primary[300]}`,
             "&:hover": {

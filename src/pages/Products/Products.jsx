@@ -1,3 +1,5 @@
+import useAuth from "customHooks/useAuth";
+
 import {
   Box,
   Breadcrumbs,
@@ -10,8 +12,11 @@ import {
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import { useDeleteProductMutation, useGetProductsQuery } from "services/api";
-
+import {
+  useDeleteProductMutation,
+  useGetProductsQuery,
+} from "rtkQuery/productApiSlice";
+import { useGetUsersQuery } from "rtkQuery/userApiSlice";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -21,8 +26,15 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import {
+  GridRowModes,
+  gridPageCountSelector,
+  GridPagination,
+  useGridApiContext,
+  useGridSelector,
   DataGrid,
   GridActionsCellItem,
+  GridRowEditStopReasons,
+  GridToolbarQuickFilter,
   GridRowParams,
   GridToolbar,
   GridToolbarColumnsButton,
@@ -38,12 +50,35 @@ import { Link } from "react-router-dom";
 import ListHeader from "pages/ListHeader";
 import ProductListSkeleton from "./skeleton/ProductListSkeleton";
 
+import MuiPagination from "@mui/material/Pagination";
+
+function Pagination({ page, onPageChange, className }) {
+  const apiRef = useGridApiContext();
+  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+
+  return (
+    <MuiPagination
+      color="primary"
+      className={className}
+      count={pageCount}
+      page={page + 1}
+      onChange={(event, newPage) => {
+        onPageChange(event, newPage - 1);
+      }}
+    />
+  );
+}
+
+function CustomPagination(props) {
+  return <GridPagination ActionsComponent={Pagination} {...props} />;
+}
 /////////////////searching/////////////////////////////
 
 ///////////////Search End////////////////////////////////////
 
 const Products = () => {
-  const [open, setOpen] = React.useState(false);
+  const { isOwner, isAdmin, isSales } = useAuth();
+  const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState("");
 
   const handleClickOpen = (params) => {
@@ -61,7 +96,8 @@ const Products = () => {
 
   const { data, error, isLoading, isFetching, isSuccess } =
     useGetProductsQuery();
-
+  // const { data, error, isLoading, isFetching, isSuccess } =
+  // useGetUsersQuery();
   const [
     deleteProduct,
     { isSuccess: isDeleteSuccess, isLoading: isDeleting, error: isDeleteError },
@@ -105,13 +141,12 @@ const Products = () => {
       <Box>
         <img
           style={{
+            objectFit: "cover",
             border: `1px solid ${theme.palette.primary[100]}`,
-            borderRadius: "15px",
-
-            padding: "4px",
+            borderRadius: "10px",
           }}
-          width="65px"
-          height="60px"
+          width="50px"
+          height="50px"
           src={params.value[0]}
         />
       </Box>
@@ -204,72 +239,87 @@ const Products = () => {
   const columns = [
     {
       field: "images",
-      headerName: "picture",
+      headerName: "",
       renderCell: renderImages,
-      flex: 0.3,
+      width: "70",
+      align: "right",
+      headerAlign: "right",
     },
     {
       field: "brand",
       headerName: "Manufacturer",
-      flex: 0.5,
+      align: "left",
+      headerAlign: "left",
+      width: "120",
     },
     {
       field: "name",
       headerName: "Product Name",
-
-      hideable: false,
-      flex: 0.5,
+      align: "left",
+      headerAlign: "left",
+      width: "300",
     },
     {
       field: "regularPrice",
       headerName: "Price",
       ...birrPrice,
-      flex: 0.5,
+      width: "150",
+      align: "left",
+      headerAlign: "left",
     },
     {
       field: "amount",
       headerName: "Stock",
       renderCell: renderStock,
-      flex: 0.5,
+      width: "150",
+      align: "left",
+      headerAlign: "left",
     },
     {
       field: "code",
       headerName: "Code",
-      flex: 0.5,
+      width: "100",
+      align: "left",
+      headerAlign: "left",
     },
     {
       field: "sku",
       headerName: "SKU",
-      flex: 0.5,
+      width: "150",
+      align: "left",
+      headerAlign: "left",
     },
 
     {
       field: "checked",
       headerName: "Publish",
       renderCell: renderChip,
-      flex: 0.5,
+      width: "120",
+      align: "left",
+      headerAlign: "left",
     },
 
     {
       field: "actions",
       type: "actions",
-      width: 80,
+      width: 150,
       getActions: (params) => [
         <GridActionsCellItem
           icon={<VisibilityIcon />}
           label="View"
           component={Link}
-          to={`/managment/productsdetail/${params.id}`}
+          to={`/dashboard/product/productsdetail/${params.id}`}
           // onClick={toggleAdmin(params.id)}
-          showInMenu
         />,
+
         <GridActionsCellItem
           icon={<ModeEditIcon />}
           label="Edit"
           component={Link}
-          to={`/managment/products/${params.id}`}
-          showInMenu
+          to={`/dashboard/product/products/${params.id}`}
+          disabled={isSales}
         />,
+
         <GridActionsCellItem
           sx={{
             color: `${theme.palette.red[500]}`,
@@ -283,8 +333,8 @@ const Products = () => {
             />
           }
           label="Delete"
-          showInMenu
           onClick={() => handleClickOpen(params)}
+          disabled={isSales}
         />,
       ],
     },
@@ -336,15 +386,19 @@ const Products = () => {
             boxShadow: `10px 10px 10px  ${theme.palette.background[500]}`,
           },
           "& .MuiDataGrid-root": {
+            fontSize: "14px",
+            fontWeight: 300,
+          },
+          "& .MuiDataGrid-root": {
             fontSize: "15px",
             fontWeight: 300,
           },
-          width: { xs: "90%", sm: "99%" },
-          height: "70vh",
+          width: { xs: "100%", sm: "99%" },
+          height: { xs: "100vh", sm: "90vh", md: "90vh" },
         }}
       >
         {/* <ProductListSkeleton /> */}
-        {isLoading && <ProductListSkeleton />}
+        {/* {isLoading s&& <ProductListSkeleton />} */}
         {/* {isFetching && <Typography>Loanding But Not First time</Typography>} */}
         {isSuccess && (
           <DataGrid
@@ -353,7 +407,10 @@ const Products = () => {
             rows={data || []}
             columns={columns}
             rowHeight={85}
-            components={{ Toolbar: CustomToolBar }}
+            components={{
+              Toolbar: CustomToolBar,
+              pagination: CustomPagination,
+            }}
             initialState={{
               pagination: {
                 paginationModel: { pageSize: 10, page: 0 },

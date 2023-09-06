@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
-import { useGetProductQuery } from "services/api";
-import { useUpdateProductMutation } from "services/api";
+import { useGetProductQuery } from "rtkQuery/productApiSlice";
+import { useUpdateProductMutation } from "rtkQuery/productApiSlice";
 
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
@@ -330,7 +330,7 @@ const EditProduct = () => {
     }
     // console.log(imageUrl);
     if (result.event === "queues-end") {
-      setImages((prevImages) => [...prevImages, imageUrl]); //adding object to end of arrya
+      setImages((prevImages) => [...prevImages, imageUrl]); //adding object to end of array
       imageUrl = [];
       i = 0;
       // console.log(imageUrl);
@@ -339,8 +339,8 @@ const EditProduct = () => {
 
   var myCropWidget = cloudinary.createUploadWidget(
     {
-      cloudName: "djznkldpb",
-      uploadPreset: "san_shop_version_one",
+      cloudName: process.env.REACT_APP_CLOUD_NAME,
+      uploadPreset: process.env.REACT_APP_UPLOAD_PRESETS,
       folder: "product_images",
       // tags: "products",
       // publicId: "upload_product_image",
@@ -384,7 +384,7 @@ const EditProduct = () => {
       // setTax(0);
       // setChecked(false);
 
-      navigate("/managment/products");
+      navigate("/dashboard/product/products");
     }
   }, [isUpdateSuccess, navigate]);
   const canSubmit =
@@ -446,13 +446,15 @@ const EditProduct = () => {
     ///////////////////////////////////////////////////////////////////////////////////////////
 
     <Box
-      p={4}
       borderRadius="10px"
       backgroundColor={
         isUpdating
           ? `${theme.palette.background[500]}`
           : `${theme.palette.background[100]}`
       }
+      sx={{
+        p: { xs: 1, sm: 4, md: 4 },
+      }}
     >
       <div>
         {isSuccess &&
@@ -654,6 +656,35 @@ const EditProduct = () => {
                             alt={image}
                             src={image}
                           />
+                          <IconButton
+                            sx={{
+                              backgroundColor: `${theme.palette.primary[500]}`,
+                              width: "17px",
+                              height: "17px",
+                              borderRadius: "4px",
+                              "&:hover": {
+                                backgroundColor: `${theme.palette.primary[100]}`,
+                              },
+                              position: "absolute",
+                              top: "1px",
+                              right: "1px",
+                            }}
+                            onClick={() =>
+                              setImages(() => {
+                                return images.filter((item) => item !== image);
+                              })
+                            }
+                            size="small"
+                          >
+                            <CloseOutlinedIcon
+                              sx={{
+                                color: `${theme.palette.white[500]}`,
+                                "&:hover": {
+                                  color: `${theme.palette.text[500]}`,
+                                },
+                              }}
+                            />
+                          </IconButton>
                         </Grid>
                       ))}
                     </Grid>
