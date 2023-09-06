@@ -1,5 +1,6 @@
 import { useSignOutMutation } from "rtkQuery/authApiSlice";
 import useAuth from "customHooks/useAuth";
+import Zoom from "@mui/material/Zoom";
 import {
   AppBar,
   Box,
@@ -210,21 +211,23 @@ const MainWrapper = () => {
                 />
               )} */}
             </Box>
-            {nonMobile && (
-              <Box display="flex">
-                <StyledIconButton onClick={handlelogOut}>
-                  <PowerSettingsNewOutlinedIcon />
-                </StyledIconButton>
-                {/* <StyledIconButtonBlue>
+
+            <Box display="flex">
+              <StyledIconButton onClick={handlelogOut}>
+                <PowerSettingsNewOutlinedIcon />
+              </StyledIconButton>
+              {/* <StyledIconButtonBlue>
                   <TranslateOutlinedIcon />
                 </StyledIconButtonBlue>
                 <StyledIconButton>
                   <StoreOutlinedIcon />
                 </StyledIconButton> */}
-              </Box>
-            )}
+            </Box>
 
             <LightTooltip
+              // disableHoverListener
+              disableFocusListener
+              TransitionComponent={Zoom}
               title={<ProfileTooltip />}
               placement="bottom-end"
               arrow

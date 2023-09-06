@@ -45,7 +45,7 @@ const Dashboard = () => {
           gridAutoFlow: "row",
           gridTemplateColumns: "repeat(6, 1fr)",
           gridTemplateRows: {
-            xs: "repeat(auto, 70px)",
+            xs: "repeat(50, 70px)",
             sm: "repeat(43, 70px)",
             md: "repeat(22, 70px)",
             lg: "repeat(auto, 70px)",
