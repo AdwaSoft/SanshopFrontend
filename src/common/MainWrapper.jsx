@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import PowerSettingsNewOutlinedIcon from "@mui/icons-material/PowerSettingsNewOutlined";
-
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import TranslateOutlinedIcon from "@mui/icons-material/TranslateOutlined";
@@ -146,6 +146,18 @@ const MainWrapper = () => {
   }, [pathname]);
   console.log(pathname.substring(1));
   console.log(pathname);
+
+  ////////////profile toooltip for mobile///////////////
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const handleTooltipClose = () => {
+    setTooltipOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setTooltipOpen(true);
+  };
+
+  //////////////////////////////////////////////////////
   return (
     <Box>
       <Box>
@@ -223,44 +235,88 @@ const MainWrapper = () => {
                   <StoreOutlinedIcon />
                 </StyledIconButton> */}
             </Box>
-
-            <LightTooltip
-              // disableHoverListener
-              enterTouchDelay={0}
-              // disableFocusListener
-              TransitionComponent={Zoom}
-              title={<ProfileTooltip />}
-              placement="bottom-end"
-              arrow
-            >
-              <Button
-                startIcon={
-                  <Avatar
-                    src="https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.webp?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc="
-                    sx={{
-                      width: "24px",
-                      height: "24px",
+            {!nonMobile ? (
+              <ClickAwayListener onClickAway={handleTooltipClose}>
+                <div>
+                  <LightTooltip
+                    PopperProps={{
+                      disablePortal: true,
                     }}
-                  />
-                }
-                // endIcon={<SettingsOutlinedIcon />}
-                variant="outlined"
-                clickable="true"
-                sx={{
-                  height: "40px",
-                  borderRadius: "40px",
-                  border: `1px solid ${theme.palette.blue[200]} `,
-                  backgroundColor: ` ${theme.palette.blue[100]}`,
-                  color: `${theme.palette.text[500]}`,
-                  "&:hover": {
-                    backgroundColor: ` ${theme.palette.blue[500]}`,
-                    color: ` ${theme.palette.white[300]}`,
-                  },
-                }}
+                    onClose={handleTooltipClose}
+                    open={tooltipOpen}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    title={<ProfileTooltip />}
+                    placement="bottom-end"
+                    arrow
+                  >
+                    <Button
+                      onClick={handleTooltipOpen}
+                      startIcon={
+                        <Avatar
+                          src="https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.webp?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc="
+                          sx={{
+                            width: "24px",
+                            height: "24px",
+                          }}
+                        />
+                      }
+                      // endIcon={<SettingsOutlinedIcon />}
+                      variant="outlined"
+                      sx={{
+                        height: "40px",
+                        borderRadius: "40px",
+                        border: `1px solid ${theme.palette.blue[200]} `,
+                        backgroundColor: ` ${theme.palette.blue[100]}`,
+                        color: `${theme.palette.text[500]}`,
+                        "&:hover": {
+                          backgroundColor: ` ${theme.palette.blue[500]}`,
+                          color: ` ${theme.palette.white[300]}`,
+                        },
+                      }}
+                    >
+                      {userRole}
+                    </Button>
+                  </LightTooltip>
+                </div>
+              </ClickAwayListener>
+            ) : (
+              <LightTooltip
+                TransitionComponent={Zoom}
+                title={<ProfileTooltip />}
+                placement="bottom-end"
+                arrow
               >
-                {userRole}
-              </Button>
-            </LightTooltip>
+                <Button
+                  startIcon={
+                    <Avatar
+                      src="https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.webp?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc="
+                      sx={{
+                        width: "24px",
+                        height: "24px",
+                      }}
+                    />
+                  }
+                  // endIcon={<SettingsOutlinedIcon />}
+                  variant="outlined"
+                  clickable="true"
+                  sx={{
+                    height: "40px",
+                    borderRadius: "40px",
+                    border: `1px solid ${theme.palette.blue[200]} `,
+                    backgroundColor: ` ${theme.palette.blue[100]}`,
+                    color: `${theme.palette.text[500]}`,
+                    "&:hover": {
+                      backgroundColor: ` ${theme.palette.blue[500]}`,
+                      color: ` ${theme.palette.white[300]}`,
+                    },
+                  }}
+                >
+                  {userRole}
+                </Button>
+              </LightTooltip>
+            )}
           </Toolbar>
         </AppBar>
         {/* Drawer Box */}
