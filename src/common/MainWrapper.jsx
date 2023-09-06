@@ -226,7 +226,8 @@ const MainWrapper = () => {
 
             <LightTooltip
               // disableHoverListener
-              disableFocusListener
+              enterTouchDelay={0}
+              // disableFocusListener
               TransitionComponent={Zoom}
               title={<ProfileTooltip />}
               placement="bottom-end"
