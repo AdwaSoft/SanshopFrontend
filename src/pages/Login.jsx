@@ -133,6 +133,46 @@ const Login = () => {
         >
           Hi, Welcome
         </Typography>
+        <Box
+          sx={{
+            textAlign: "center",
+            p: 2,
+            width: "100%",
+            height: "70px",
+            backgroundColor: `${theme.palette.primary[100]}`,
+            mb: 2,
+            borderRadius: "10px",
+          }}
+        >
+          <Typography
+            sx={{
+              color: `${theme.palette.primary[500]}`,
+            }}
+          >
+            Admin:{" "}
+            <span
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              sanshop@san.com
+            </span>
+          </Typography>
+          <Typography
+            sx={{
+              color: `${theme.palette.primary[500]}`,
+            }}
+          >
+            Pass :{" "}
+            <span
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              123412
+            </span>
+          </Typography>
+        </Box>
         <Typography
           variant="h6"
           sx={{
