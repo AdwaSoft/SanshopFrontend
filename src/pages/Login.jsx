@@ -25,8 +25,8 @@ import { CheckBox, Visibility, VisibilityOff } from "@mui/icons-material";
 const Login = () => {
   const theme = useTheme();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("sanshop@san.com");
+  const [password, setPassword] = useState("123412");
   const [showPassword, setshowPassword] = useState(false);
 
   const navigate = useNavigate();
